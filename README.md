@@ -42,8 +42,7 @@ O projeto segue um pipeline analítico completo:
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/SEU_USUARIO/previsao-populacional-lucas-do-rio-verde.git
-cd previsao-populacional-lucas-do-rio-verde
+https://github.com/thamires-siriustech/previsao-populacional-lucas-do-rio-verde.git
 
 # Instalar dependências
 pip install -r requirements.txt
