@@ -68,7 +68,7 @@ previsao-populacional-lucas-do-rio-verde/
 
 ## Limitações
 
-- O parâmetro de moradores por domicílio (3,0) é provisório, a confirmar no Censo 2022 para o município. A análise de sensibilidade mostra que seu impacto é secundário (3,5× menor que o cenário de crescimento).
+- O parâmetro de moradores por domicílio (3,0) é provisório, a confirmar no Censo 2022 para o município. A análise de sensibilidade mostra que seu impacto é secundário (3,4× menor que a variação entre cenários).
 - Os números refletem **demanda bruta por crescimento populacional** — não o déficit habitacional acumulado, nem descontam a oferta já em construção.
 - Os cenários supõem taxa de crescimento constante; choques econômicos locais podem alterar a trajetória.
 
