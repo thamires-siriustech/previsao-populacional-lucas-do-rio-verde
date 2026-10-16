@@ -8,25 +8,27 @@ Análise de dados que estima quantos novos moradores Lucas do Rio Verde deve rec
 
 ## Contexto
 
-Lucas do Rio Verde saiu de 6.693 habitantes em 1991 para 95.792 em 2025 — crescimento superior a 1.100% em três décadas. Em 2025 foi o município que mais cresceu no Centro-Oeste e o segundo do Brasil entre cidades com mais de 50 mil habitantes. O motor é a agroindústria, que atrai trabalhadores de outras regiões de forma sustentada.
+Lucas do Rio Verde passou de 95.792 habitantes estimados em 2025 para **99.291 habitantes estimados em 2026**, segundo o IBGE, com referência em 1º de julho. Isso representa crescimento de aproximadamente 3,65% em um ano.
 
-Esse ritmo pressiona diretamente o mercado imobiliário local, mas o setor opera sem uma quantificação pública de quanta moradia a cidade precisará nos próximos anos. Este projeto preenche essa lacuna usando apenas fontes oficiais.
+Esse crescimento pressiona a demanda por moradia. O projeto usa a série histórica do SIDRA/IBGE, os Censos de 2010 e 2022 e a estimativa oficial de 2026 para construir cenários — deixando explícito o que é dado oficial e o que é projeção do modelo. Fonte: [IBGE — Estimativas da População](https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html).
 
 ## Principais resultados
 
-- **Lucas do Rio Verde deve cruzar 100 mil habitantes até 2027** em qualquer cenário de crescimento razoável.
-- Em 2035, a população projetada fica entre **128.736** (Conservador) e **149.618** (Otimista), com cenário central em torno de **140.000**.
-- A demanda por novas moradias entre 2026 e 2035 fica entre **10.300 e 19.200 unidades** — média de **1.100 a 1.800 unidades por ano**.
-- **Validação cruzada de dois métodos independentes:** a regressão log-linear (143.401) e o CAGR intercensal (140.303) convergem para 2035 com diferença de apenas **2,2%**.
+- **Base observada mais recente:** 99.291 habitantes na estimativa oficial do IBGE para 2026.
+- O teste de um passo, feito a partir da base de 2025, colocou a estimativa oficial de 2026 dentro da faixa dos três cenários; o cenário Base ficou cerca de **0,23%** acima do valor oficial.
+- Para 2035, os cenários projetam **129.552** habitantes (Conservador), **139.982** (Base) e **148.320** (Otimista).
+- A demanda bruta por moradias gerada pelo crescimento populacional entre 2027 e 2035 fica em torno de **10.086 unidades** no cenário Conservador, **13.565** no Base e **16.342** no Otimista, usando provisoriamente 3 moradores por domicílio.
+- Variando também o parâmetro domiciliar de 2,8 a 3,2 moradores, a matriz de sensibilidade fica entre **9.457 e 17.512 unidades**. Esses valores não representam o déficit habitacional acumulado nem descontam a oferta já em obra.
+- A projeção log-linear histórica resulta em cerca de 143,4 mil habitantes em 2035, próxima ao cenário Base recalibrado; essa proximidade é uma checagem complementar, não uma garantia de precisão.
 
 ## Metodologia
 
 O projeto segue um pipeline analítico completo:
 
-1. **Extração** — série populacional 2001–2025 direto da API do SIDRA/IBGE (tabela 6579), de forma reprodutível.
+1. **Extração** — série histórica 2001–2025 via API do SIDRA/IBGE (tabela 6579); a série é limitada explicitamente a 2025 para separar o histórico da estimativa oficial mais recente.
 2. **Tratamento e consolidação** — verificação de qualidade, tratamento de anos ausentes e incorporação dos censos de 2010 e 2022, com identificação do padrão de rebaseamento censitário.
 3. **Cálculo de taxas (CAGR)** — decomposição do crescimento por sub-período para isolar a taxa livre de contaminação metodológica (intercensal 2011–2021).
-4. **Cenários de projeção** — três trajetórias (Conservador, Base, Otimista) ancoradas em taxas observadas da própria série.
+4. **Validação e projeção** — compara o cenário calculado a partir da base de 2025 com a estimativa oficial de 2026 e, em seguida, ancora a projeção 2027–2035 no valor oficial mais recente.
 5. **Conversão em demanda habitacional** — com análise de sensibilidade cruzando cenário de crescimento e razão de moradores por domicílio.
 6. **Modelagem estatística** — regressão linear e log-linear com validação temporal, confrontando a abordagem determinística com modelos estatísticos.
 
@@ -51,7 +53,7 @@ pip install -r requirements.txt
 jupyter notebook previsao_populacao_lucas_do_rio_verde.ipynb
 ```
 
-No Jupyter, use **Kernel → Restart & Run All** para executar todo o pipeline do zero. Os dados são baixados automaticamente da API do IBGE — não é necessário nenhum download manual.
+Execute o notebook a partir da raiz do repositório. No Jupyter, use **Kernel → Restart & Run All** para executar todo o pipeline. A série histórica é baixada da API do IBGE; a estimativa oficial de 2026 é informada separadamente a partir da publicação anual do IBGE e deve ser atualizada quando uma nova edição for divulgada.
 
 ## Estrutura do repositório
 
@@ -72,7 +74,7 @@ previsao-populacional-lucas-do-rio-verde/
 
 ## Fonte dos dados
 
-IBGE — SIDRA tabela 6579 (População residente estimada) e Censos Demográficos de 2010 e 2022.
+IBGE — SIDRA tabela 6579 (série histórica de população residente estimada), Censos Demográficos de 2010 e 2022 e [Estimativas da População 2026](https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html) (referência em 1º de julho de 2026).
 
 ---
 
